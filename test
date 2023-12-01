@@ -1,0 +1,55 @@
+
+import websockets
+import asyncio
+import json
+ 
+ 
+# Websocket listner
+async def handle_websocket(uri):
+    global last_listing_time
+ 
+    while True:
+        try:
+            async with websockets.connect(uri) as websocket:
+                # await websocket.send('{"action":"example", "type":"bybit.pairs.perpetual"}')
+ 
+                while True:
+                    data = await websocket.recv()
+                    await process_data(data)
+ 
+        except websockets.ConnectionClosed:
+            print("WebSocket connection closed. Reconnecting...")
+            await asyncio.sleep(5)
+ 
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            await asyncio.sleep(5)
+ 
+ 
+# process the incoming data
+async def process_data(data):
+ 
+    if data != "pong":
+ 
+        try:
+ 
+            data = json.loads(data)
+            print(data)
+ 
+ 
+ 
+        except Exception as e:
+            print(e)
+ 
+ 
+ 
+ 
+async def main():
+    uri = 'wss://fstream.binance.com/ws/bnbusdt@aggTrade'  
+    print(f"\n\n\n------------------------------------\n")
+    print("[+] Waiting for websocket msg...")
+    await handle_websocket(uri)
+ 
+ 
+if __name__ == "__main__":
+    asyncio.get_event_loop().run_until_complete(main())

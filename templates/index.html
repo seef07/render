@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candlestick Chart and Live Price Update</title>
+    <style>
+        /* Add any custom styles here */
+        body {
+            background-color: #dddddd; /* Replace with your preferred shade of grey */
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="chart1" style="width: 800px; height: 400px;"></div>
+
+    <div>
+        <!-- Live Price Update -->
+        <p id="livePrice">Live Price: </p>
+    </div>
+    <form action="/submit" method="post">
+      <label for="pair">Pair:</label>
+      <input type="text" id="pair" name="pair" required>
+      <br>
+      <label for="interval">Interval:</label>
+      <input type="text" id="interval" name="interval" required>
+      <br>
+      <input type="submit" value="Submit">
+  </form>
+
+  
+<table id="newsTable">
+  <thead>
+    <tr>
+      <th>Received At</th>
+      <th>Source</th>
+      <th>Coin</th>
+      <th>Body</th>
+      <th>Username</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- News data will be populated here -->
+  </tbody>
+</table>
+{{ table_html | safe }}
+  <p id = "messageDiv"> </p>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+ 
+ <script>
+      var graph1 = {{ firstchart | safe }};
+Plotly.plot("chart1", graph1, {});
+    </script>
+
+<script>  // Initialize an empty array
+   
+  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // Check if the Socket.IO connection is open
+    socket.on('connect', function () {
+        console.log({{ message2 }});
+        console.log('Socket.IO connected.');
+
+        // Listen for the 'updateSensorData' event from the server
+        socket.on('update', function (data) {
+            var livePriceElement = document.getElementById('livePrice');
+            livePriceElement.textContent = 'Live Price: ' + data.p;
+            console.log('Received updateSensorData:', data);
+        });
+
+        socket.on('data', function (data) {
+            console.log('Received message:', data);
+            var receivedAt = data.receivedAt;
+            var source = data.source;
+            var username = data.username;
+            var coin = data.coin;
+            var body = data.body;
+
+            // Call the function to update the table
+            addNews(receivedAt, source, coin, body, username);
+
+            // Update your HTML to display the message
+            document.getElementById('messageDiv').innerText = data.body;
+        });
+    });
+
+    let news = [];
+
+    // Function to add timestamp and value to the list
+    function addNews(receivedAt, source, coin, body, username) {
+        news.push({ receivedAt, source, coin, body, username });
+    }
+
+    function updateTable() {
+        // Get the table body
+        let tableBody = document.querySelector('#newsTable tbody');
+
+        // Clear existing rows
+        tableBody.innerHTML = '';
+
+        // Iterate through news and add rows to the table
+        news.forEach(newsItem => {
+            let row = tableBody.insertRow();
+            Object.values(newsItem).forEach(value => {
+                let cell = row.insertCell();
+                cell.textContent = value;
+            });
+        });
+    }
+});
+
+           
+
+
+        
+    </script>
+</body>
+</html>
