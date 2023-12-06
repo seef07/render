@@ -5,7 +5,8 @@ import websockets
 import json
 import time
 import matplotlib.pyplot as plt
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
+
 from flask_socketio import SocketIO
 from threading import Lock
 from sklearn.preprocessing import MinMaxScaler
@@ -28,6 +29,8 @@ thread = None
 thread_lock = Lock()
 
 app = Flask(__name__)
+app.config['SERVER_NAME'] = '127.0.0.1:5000'  # Replace with your actual server name
+app.config['APPLICATION_ROOT'] = '/'
 app.config['SECRET_KEY'] = 'donsky!'
 socketio = SocketIO(app, cors_allowed_origins='*')
 
@@ -73,14 +76,21 @@ async def process_data(data):
             data = json.loads(data)
             socketio.emit('update', data)
             print("Data send :)")
+
             if 'receivedAt' in data:
                 socketio.emit('data', data)
-                return render_template('index.html',  table_html = fetchnews(),firstchart = printchart())
-                print("Success!")
+                print("Reload Index!")
+
+                # Use flask's app context to call render_template
+                with app.app_context():
+                    print("Inside app context")
+                    return redirect(url_for('index'))
+                
             await asyncio.sleep(10)
 
         except Exception as e:
             print(f"Error processing data: {e}")
+
 
 # Main function
 async def main():
@@ -155,8 +165,7 @@ def printchart():
         numerical_columns = ['sumOpenInterest', 'close']  # Replace with actual column names
         combined_data[numerical_columns] = scaler.fit_transform(combined_data[numerical_columns])
         if symbol == "BTCUSDT":
-            fig.add_trace(go.Scatter(x=combined_data['timestamp'] + pd.Timedelta(hours=1), y=combined_data['close'], mode='lines', name=f'{symbol} - Market price', line=dict(color='black', width = 2)))
-            print("News")
+            fig.add_trace(go.Scatter(x=combined_data['timestamp'] + pd.Timedelta(hours=1), y=combined_data['close'], mode='lines', name=f'{symbol} - Market price', line=dict(color='white', width = 2)))
         scores = global_df['score'].values.reshape(-1, 1)
         scaled_scores = scaler.fit_transform(scores)
         global_df['scaled_score'] = scaled_scores.flatten()
@@ -183,7 +192,7 @@ def printchart():
                     xaxis_title='Timestamp',
                     yaxis_title='Normalized Value',
                     legend_title='Symbols')
-
+    fig.update_layout(template='plotly_dark')
     grapp  = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
 
@@ -198,7 +207,7 @@ def fetchnews():
     # List of columns to remove
     df['Text'] = df['body'].fillna('') + ' ' + df['description'].fillna('')
 
-    columns_to_remove = ['_id','body','image3','image4', 'imageQuote2', 'imageQuote3', 'imageQuote4','image', 'description', 'createdAt', 'url', 'title', 'suggestions', 'category', 'isReply', 'coin', 'image1', 'username', 'name', 'icon', 'twitterId', 'tweetId', 'isRetweet', 'isQuote', 'image', 'imageQuote', 'image2']
+    columns_to_remove = ['_id','body','image3','image4', 'imageQuote2', 'imageQuote3', 'imageQuote4','image', 'description', 'createdAt', 'url', 'title', 'suggestions', 'category', 'isReply', 'coin', 'image1', 'username', 'name', 'icon', 'twitterId', 'tweetId', 'isRetweet', 'isQuote', 'image', 'imageQuote', 'image2', "important"]
 
     # Drop specified columns
     df = df.drop(columns=columns_to_remove, errors='ignore')
@@ -210,7 +219,6 @@ def fetchnews():
     global_df['receivedAt'] = df['receivedAt']
     global_df['receivedAt'] = global_df['receivedAt'] + timedelta(hours=1)
     global_df['score'] = df['score']
-    print(global_df)
     
     table_html = df.style.set_table_styles(styles).render(classes='table', index=False)
     return table_html
@@ -223,12 +231,12 @@ def analyze_sentiment(text):
 global_df = pd.DataFrame(columns=['receivedAt', 'score'])
 
 styles = [
-    {'selector': 'th', 'props': [('background-color', '#4CAF50'), ('color', 'white'), ('border', '2px solid black')]},
-    {'selector': 'td', 'props': [('border', '1px solid #dddddd'), ('text-align', 'left'), ('padding', '8px')]},
-    {'selector': 'tr:nth-child(even)', 'props': [('background-color', '#f2f2f2')]},
+    {'selector': 'th', 'props': [('background-color', '##3A4D4D'), ('color', 'white'), ('border', '2px solid white')]},
+    {'selector': 'td', 'props': [('border', '1px solid white'), ('text-align', 'left'), ('padding', '8px')]},
+    {'selector': 'tr:nth-child(even)', 'props': [('background-color', '#0D0D0D')]},
     {'selector': 'table', 'props': [('border-collapse', 'separate'), ('border-spacing', '0'), ('width', '70%'), ('margin', 'auto')]},
     {'selector': 'td, th', 'props': [('border-radius', '5px')]},
-    {'selector': 'table', 'props': [('border', '1px solid black'), ('width', '70%'), ('margin', 'auto')]},
+    {'selector': 'table', 'props': [('border', '1px solid white'), ('width', '70%'), ('margin', 'auto')]},
 ]
 #######################################################################
 from datetime import datetime
@@ -299,7 +307,7 @@ def gettrend(start):
 def filtertje(df):
     # Drop rows where 'Source' is equal to 'Twitter'
     # Assuming 'source' column is in lowercase, adjust accordingly if needed
-    df_filtered = df[(df['source'] != 'Twitter')  & (df['body'] != '')].copy()
+    df_filtered = df[(df['source'] != 'twitter')  & (df['body'] != '')].copy()
 
     return df_filtered
 
@@ -308,8 +316,7 @@ def filtertje(df):
 # Serve root index file
 @app.route('/')
 def index():
-    print("ghye")
-    print(global_df)
+    print("Loading Index..")
     return render_template('index.html',  table_html = fetchnews(), firstchart = printchart())
     
 if __name__ == '__main__':
