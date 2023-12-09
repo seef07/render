@@ -1,64 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candlestick Chart and Live Price Update</title>
-    <style>
-        /* Add any custom styles here */
-        body {
-            background-color: #111111  ;
-            color: white; /* Replace with your preferred shade of grey */
-        }
-    
-    </style>
-</head>
-<body>
-    <div id="chart1" style="width: 800px; height: 400px;"></div>
-
-    <div>
-        <!-- Live Price Update -->
-        <p id="livePrice">Live Price: </p>
-    </div>
-    <form action="/submit" method="post">
-      <label for="pair">Pair:</label>
-      <input type="text" id="pair" name="pair" required>
-      <br>
-      <label for="interval">Interval:</label>
-      <input type="text" id="interval" name="interval" required>
-      <br>
-      <input type="submit" value="Submit">
-  </form>
-
-  
-<table id="newsTable">
-  <thead>
-    <tr>
-      <th>Received At</th>
-      <th>Source</th>
-      <th>Coin</th>
-      <th>Body</th>
-      <th>Username</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- News data will be populated here -->
-  </tbody>
-</table>
-{{ table_html | safe }}
-  <p id = "messageDiv"> </p>
+    <title>Spotify Dashboard</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
- 
- <script>
-      var graph1 = {{ firstchart | safe }};
-Plotly.plot("chart1", graph1, {});
-    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
 
-<script>  // Initialize an empty array
-   
-  </script>
+        #dashboard {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        #left-column {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+        }
+
+        #chart1 {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 100% !important;
+        }
+
+        #newsTable {
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background-color: #333;
+        }
+        #right-column {
+    width: 40%; /* Adjust the width as needed */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align to the right */
+}
+
+#trading {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    width: 50%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+   /* Align form elements to the right */
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #1DB954;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+
+<body>
+    <div id="dashboard">
+        <div id="left-column">
+            <div id="chart1">
+    
+            </div>
+
+            <div id="newsTable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+                            <th>Source</th>
+                            <th>receivedAt</th>
+                            <th>Source</th>
+                            <th>Body</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{ table_html | safe }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="right-column">
+            <div id="trading">
+                <h2>Trade</h2>
+                <form>
+                    <label for="buyAmount">Amount to Buy:</label>
+                    <input type="number" id="buyAmount" placeholder="Enter amount">
+
+                    <label for="sellAmount">Amount to Sell:</label>
+                    <input type="number" id="sellAmount" placeholder="Enter amount">
+
+                    <label for="limitPrice">Limit Price:</label>
+                    <input type="number" id="limitPrice" placeholder="Enter limit price">
+
+                    <button type="button" onclick="buy()">Buy</button>
+                    <button type="button" onclick="sell()">Sell</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
+        var graph1 = {{ firstchart | safe }};
+  Plotly.plot("chart1", graph1, {});
+      </script>
+
+
+
+    <script>
+        function buy() {
+            // Add logic for buy operation
+            alert('Buy button clicked');
+        }
+
+        function sell() {
+            // Add logic for sell operation
+            alert('Sell button clicked');
+        }
+    </script>
+      <script>
         document.addEventListener('DOMContentLoaded', function () {
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
@@ -73,6 +178,11 @@ Plotly.plot("chart1", graph1, {});
             livePriceElement.textContent = 'Live Price: ' + data.p;
             console.log('Received updateSensorData:', data);
         });
+        
+        socket.on('reload', function() {
+        // Reload the page or update the content as needed
+        location.reload();
+    });
 
         socket.on('data', function (data) {
             console.log('Received message:', data);
@@ -121,4 +231,5 @@ Plotly.plot("chart1", graph1, {});
         
     </script>
 </body>
+
 </html>
