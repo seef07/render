@@ -58,17 +58,26 @@
             background-color: #333;
         }
         #right-column {
-    width: 40%; /* Adjust the width as needed */
+    width: 48%;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Align to the right */
+    flex-wrap: wrap;
 }
-
-#trading {
+#trading,
+#trading2,
+#trading3 {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    width: 50%;
+    width: 48%;
+    margin-bottom: 10px; /* Adjust the margin-bottom as needed */
+    box-sizing: border-box;
+    height: 450px !important;
+    margin-right: 2%;
+}
+
+#trading3 {
+    width: 100%;
+    margin-right: 0;
 }
 
 form {
@@ -96,6 +105,9 @@ button {
     border-radius: 5px;
     cursor: pointer;
 }
+#liveChart {
+            max-height: 400px;
+        }
 
     </style>
 </head>
@@ -128,15 +140,20 @@ button {
 
         <div id="right-column">
             <div id="trading">
-                <h2>Trade</h2>
+   
+   
+                    
+                    <div id="liveChart"></div>
+  
+            </div>
+            <div id="trading2">
+                <h2>OK</h2>
                 <form>
-                    <label for="buyAmount">Amount to Buy:</label>
-                    <input type="number" id="buyAmount" placeholder="Enter amount">
+                    <div id="livePrice"></div>
+                    <label for="sellAmount">Long:</label>
+                    <input type="number" id="longAmount" placeholder="Enter amount">
 
-                    <label for="sellAmount">Amount to Sell:</label>
-                    <input type="number" id="sellAmount" placeholder="Enter amount">
-
-                    <label for="limitPrice">Limit Price:</label>
+                    <label for="limitPrice">Short</label>
                     <input type="number" id="limitPrice" placeholder="Enter limit price">
 
                     <button type="button" onclick="buy()">Buy</button>
@@ -165,6 +182,24 @@ button {
     </script>
       <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var chartDiv = document.getElementById('liveChart');
+    var chartData = [{
+        x: [],
+        y: [],
+        type: 'line',
+        mode: 'lines+markers',
+        line: { color: '#1DB954' },
+    }];
+    var layout = {
+        title: 'Live Bitcoin Price',
+        xaxis: { title: 'Time' },
+        yaxis: { title: 'Price (USD)' },
+        paper_bgcolor: '#121212',  // Background color for the chart area
+        plot_bgcolor: '#121212',   // Background color for the plot area
+        font: { color: '#fff' }    // Font color
+    };
+    Plotly.newPlot(chartDiv, chartData, layout);
+
     var socket = io.connect('http://' + document.domain + ':' + location.port);
 
     // Check if the Socket.IO connection is open
@@ -177,6 +212,23 @@ button {
             var livePriceElement = document.getElementById('livePrice');
             livePriceElement.textContent = 'Live Price: ' + data.p;
             console.log('Received updateSensorData:', data);
+     
+            var timestamp = new Date().toLocaleTimeString();
+            var price = parseFloat(data.p);
+
+        // Update the chart data
+        chartData[0].x.push(timestamp);
+        chartData[0].y.push(price);
+
+        // Keep only the last 50 data points
+        if (chartData[0].x.length > 50) {
+            chartData[0].x.shift();
+            chartData[0].y.shift();
+        }
+
+        // Update the Plotly chart
+        Plotly.update(chartDiv, chartData, layout);
+     
         });
         
         socket.on('reload', function() {
