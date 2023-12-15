@@ -335,7 +335,7 @@ def tradeBTC():
                 aa = amount/price 
                 print(price)
                 if acc.open_trade("long", aa, price):
-                    return True
+                    return redirect(url_for('/'))
             elif action == 'short':
 
                 return f"Deleted amount: {processed_amount}"
@@ -346,37 +346,67 @@ def tradeBTC():
     else:
         return "Amount not provided!"
 
+from flask import request
+
+@app.route('/close', methods=['GET', 'POST'])
+def close():
+    print("activater")
+    error = None
+    if 'tradeid' in request.args or 'tradeid' in request.form:
+        trade_id = int(request.args.get('tradeid') or request.form.get('tradeid'))  # Assign to trade_id instead of tradeid
+        if acc.close_trade_by_id(trade_id, 125):
+            print("success")  # Corrected spelling of 'success'
+            return "Trade successfully closed"  # Add a return statement for response handling
+    else:
+        print("Trade ID not provided!")  # Modified error message for clarity
+        return "Trade ID not provided!"
+
 def gettrades(trades):
     table_content = "<table  id='newsTable'>"
     table_content += "<tr><th>Trade ID</th><th>Trade Type</th><th>Quantity</th><th>Price</th><th>Live Price</th><th>Percentage Change</th><th>USD Dollars Profit</th><th>Action</th></tr>"
 
     for trade in trades:
-        print(trade)
         if trade.active:
             table_content += f"<tr><td>{trade.trade_id}</td><td>{trade.trade_type}</td><td>{trade.quantity}</td><td>{trade.price}</td>"
             table_content += f"<td><input type='number' id='liveprice_{trade.trade_id}' value='{trade.price}'></td>"
             table_content += f"<td><span id='percentage_change_{trade.trade_id}'>0.00%</span></td>"
             table_content += f"<td><span id='usd_profit_{trade.trade_id}'>$0.00</span></td>"
-            table_content += f"<td><button onclick='calculateValues({trade.trade_id})'>Close</button>"
-            table_content += f"<input type='hidden' id='tradeid_{trade.trade_id}' value='{trade.trade_id}'></td></tr>"
-    
+            table_content += f"<td><form method='post' action='/close'>"  # Opening form tag
+            table_content += f"<button type='submit' name='tradeid' value='{trade.trade_id}'>Close</button>"
+            table_content += f"<input type='hidden' id='tradeid_{trade.trade_id}' name='tradeid' value='{trade.trade_id}'>"  # Hidden input for trade ID
+            table_content += f"</form></td></tr>"  # Closing form tag and table row
+
     table_content += "</table>"
 
-    # JavaScript function to calculate values based on live price
-    table_content += "<script>"
-    table_content += "function calculateValues(tradeId) {"
-    table_content += "    let livePrice = parseFloat(document.getElementById(`liveprice_${tradeId}`).value);"
-    table_content += "    let tradePrice = parseFloat(document.getElementById(`price_${tradeId}`).innerText);"
-    table_content += "    let percentageChangeElement = document.getElementById(`percentage_change_${tradeId}`);"
-    table_content += "    let usdProfitElement = document.getElementById(`usd_profit_${tradeId}`);"
-    table_content += "    let percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;"
-    table_content += "    let usdProfit = (livePrice - tradePrice) * trade.quantity;"
-    table_content += "    percentageChangeElement.innerText = percentageChange.toFixed(2) + '%';"
-    table_content += "    usdProfitElement.innerText = '$' + usdProfit.toFixed(2);"
-    table_content += "}"
-    table_content += "</script>"
+    # JavaScript function for value calculations
+    calculate_values_script = """
+    <script>
+    function updateValues(tradeId) {
+        const livePriceInput = document.getElementById(`liveprice_${tradeId}`);
+        const percentageChangeSpan = document.getElementById(`percentage_change_${tradeId}`);
+        const usdProfitSpan = document.getElementById(`usd_profit_${tradeId}`);
+        
+        livePriceInput.addEventListener('input', function() {
+            const livePrice = parseFloat(livePriceInput.value);
+            const tradePrice = parseFloat(document.getElementById(`liveprice_${tradeId}`).value); // Retrieve trade price from live price input
+            
+            // Calculate percentage change and USD profit
+            const percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;
+            const usdProfit = (livePrice - tradePrice) * parseInt(document.getElementById(`quantity_${tradeId}`).textContent); // Assuming quantity is retrieved from an element
+            
+            // Update span elements with calculated values
+            percentageChangeSpan.textContent = `${percentageChange.toFixed(2)}%`;
+            usdProfitSpan.textContent = `$${usdProfit.toFixed(2)}`;
+        });
+    }
+    </script>
+    """
+
+    # Append the JavaScript function to your table content
+    table_content += calculate_values_script
 
     return table_content
+
 
 acc = TradesManager()
 
