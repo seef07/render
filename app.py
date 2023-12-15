@@ -5,7 +5,7 @@ import websockets
 import json
 import time
 import matplotlib.pyplot as plt
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, request
 
 from flask_socketio import SocketIO
 from threading import Lock
@@ -75,8 +75,8 @@ async def process_data(data):
         try:
             data = json.loads(data)
             socketio.emit('update', data)
-            print("Data send :)")
-
+            print(data['p'])
+            price = data['p']
             if 'receivedAt' in data:
                 socketio.emit('data', data)
                 print("Reload Index!")
@@ -259,7 +259,7 @@ from datetime import datetime
 
 
 data = {
-    "timestamp": ["Dec 2 at 10:00 PM","Dec 2 at 11:00 PM","Dec 2 at 3:00 PM","Dec 2 at 4:00 PM","Dec 2 at 5:00 PM","Dec 2 at 6:00 PM","Dec 2 at 7:00 PM","Dec 2 at 8:00 PM","Dec 2 at 9:00 PM","Dec 3 at 10:00 AM","Dec 3 at 10:00 PM","Dec 3 at 11:00 AM","Dec 3 at 11:00 PM","Dec 3 at 12:00 AM","Dec 3 at 12:00 PM","Dec 3 at 1:00 AM","Dec 3 at 1:00 PM","Dec 3 at 2:00 AM","Dec 3 at 2:00 PM","Dec 3 at 3:00 AM","Dec 3 at 3:00 PM","Dec 3 at 4:00 AM","Dec 3 at 4:00 PM","Dec 3 at 5:00 AM","Dec 3 at 5:00 PM","Dec 3 at 6:00 AM","Dec 3 at 6:00 PM","Dec 3 at 7:00 AM","Dec 3 at 7:00 PM","Dec 3 at 8:00 AM","Dec 3 at 8:00 PM","Dec 3 at 9:00 AM","Dec 3 at 9:00 PM","Dec 4 at 10:00 AM","Dec 4 at 10:00 PM","Dec 4 at 11:00 AM","Dec 4 at 11:00 PM","Dec 4 at 12:00 AM","Dec 4 at 12:00 PM","Dec 4 at 1:00 AM","Dec 4 at 1:00 PM","Dec 4 at 2:00 AM","Dec 4 at 2:00 PM","Dec 4 at 3:00 AM","Dec 4 at 3:00 PM","Dec 4 at 4:00 AM","Dec 4 at 4:00 PM","Dec 4 at 5:00 AM","Dec 4 at 5:00 PM","Dec 4 at 6:00 AM","Dec 4 at 6:00 PM","Dec 4 at 7:00 AM","Dec 4 at 7:00 PM","Dec 4 at 8:00 AM","Dec 4 at 8:00 PM","Dec 4 at 9:00 AM","Dec 4 at 9:00 PM","Dec 5 at 10:00 AM","Dec 5 at 10:00 PM","Dec 5 at 11:00 AM","Dec 5 at 11:00 PM","Dec 5 at 12:00 AM","Dec 5 at 12:00 PM","Dec 5 at 1:00 AM","Dec 5 at 1:00 PM","Dec 5 at 2:00 AM","Dec 5 at 2:00 PM","Dec 5 at 3:00 AM","Dec 5 at 3:00 PM","Dec 5 at 4:00 AM","Dec 5 at 4:00 PM","Dec 5 at 5:00 AM","Dec 5 at 5:00 PM","Dec 5 at 6:00 AM","Dec 5 at 6:00 PM","Dec 5 at 7:00 AM","Dec 5 at 7:00 PM","Dec 5 at 8:00 AM","Dec 5 at 8:00 PM","Dec 5 at 9:00 AM","Dec 5 at 9:00 PM","Dec 6 at 10:00 AM","Dec 6 at 10:00 PM","Dec 6 at 11:00 AM","Dec 6 at 11:00 PM","Dec 6 at 12:00 AM","Dec 6 at 12:00 PM","Dec 6 at 1:00 AM","Dec 6 at 1:00 PM","Dec 6 at 2:00 AM","Dec 6 at 2:00 PM","Dec 6 at 3:00 AM","Dec 6 at 3:00 PM","Dec 6 at 4:00 AM","Dec 6 at 4:00 PM","Dec 6 at 5:00 AM","Dec 6 at 5:00 PM","Dec 6 at 6:00 AM","Dec 6 at 6:00 PM","Dec 6 at 7:00 AM","Dec 6 at 7:00 PM","Dec 6 at 8:00 AM","Dec 6 at 8:00 PM","Dec 6 at 9:00 AM","Dec 6 at 9:00 PM","Dec 7 at 10:00 AM","Dec 7 at 10:00 PM","Dec 7 at 11:00 AM","Dec 7 at 11:00 PM","Dec 7 at 12:00 AM","Dec 7 at 12:00 PM","Dec 7 at 1:00 AM","Dec 7 at 1:00 PM","Dec 7 at 2:00 AM","Dec 7 at 2:00 PM","Dec 7 at 3:00 AM","Dec 7 at 3:00 PM","Dec 7 at 4:00 AM","Dec 7 at 4:00 PM","Dec 7 at 5:00 AM","Dec 7 at 5:00 PM","Dec 7 at 6:00 AM","Dec 7 at 6:00 PM","Dec 7 at 7:00 AM","Dec 7 at 7:00 PM","Dec 7 at 8:00 AM","Dec 7 at 8:00 PM","Dec 7 at 9:00 AM","Dec 7 at 9:00 PM","Dec 8 at 10:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 AM","Dec 8 at 11:00 PM","Dec 8 at 12:00 AM","Dec 8 at 12:00 PM","Dec 8 at 1:00 AM","Dec 8 at 1:00 PM","Dec 8 at 2:00 AM","Dec 8 at 2:00 PM","Dec 8 at 3:00 AM","Dec 8 at 3:00 PM","Dec 8 at 4:00 AM","Dec 8 at 4:00 PM","Dec 8 at 5:00 AM","Dec 8 at 5:00 PM","Dec 8 at 6:00 AM","Dec 8 at 6:00 PM","Dec 8 at 7:00 AM","Dec 8 at 7:00 PM","Dec 8 at 8:00 AM","Dec 8 at 8:00 PM","Dec 8 at 9:00 AM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 11:00 AM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 4:00 AM","Dec 9 at 5:00 AM","Dec 9 at 6:00 AM","Dec 9 at 7:00 AM","Dec 9 at 8:00 AM","Dec 9 at 9:00 AM"],  # Include all your timestamps
+    "timestamp": ["Dec 10 at 10:00 PM","Dec 10 at 11:00 AM","Dec 10 at 11:00 PM","Dec 10 at 12:00 AM","Dec 10 at 12:00 PM","Dec 10 at 1:00 AM","Dec 10 at 1:00 PM","Dec 10 at 2:00 AM","Dec 10 at 2:00 PM","Dec 10 at 3:00 AM","Dec 10 at 3:00 PM","Dec 10 at 4:00 AM","Dec 10 at 4:00 PM","Dec 10 at 5:00 AM","Dec 10 at 5:00 PM","Dec 10 at 6:00 AM","Dec 10 at 6:00 PM","Dec 10 at 7:00 AM","Dec 10 at 7:00 PM","Dec 10 at 8:00 AM","Dec 10 at 8:00 PM","Dec 10 at 9:00 AM","Dec 10 at 9:00 PM","Dec 11 at 10:00 AM","Dec 11 at 10:00 PM","Dec 11 at 11:00 AM","Dec 11 at 11:00 PM","Dec 11 at 12:00 AM","Dec 11 at 12:00 PM","Dec 11 at 1:00 AM","Dec 11 at 1:00 PM","Dec 11 at 2:00 AM","Dec 11 at 2:00 PM","Dec 11 at 3:00 AM","Dec 11 at 3:00 PM","Dec 11 at 4:00 AM","Dec 11 at 4:00 PM","Dec 11 at 5:00 AM","Dec 11 at 5:00 PM","Dec 11 at 6:00 AM","Dec 11 at 6:00 PM","Dec 11 at 7:00 AM","Dec 11 at 7:00 PM","Dec 11 at 8:00 AM","Dec 11 at 8:00 PM","Dec 11 at 9:00 AM","Dec 11 at 9:00 PM","Dec 12 at 10:00 AM","Dec 12 at 10:00 PM","Dec 12 at 11:00 AM","Dec 12 at 11:00 PM","Dec 12 at 12:00 AM","Dec 12 at 12:00 PM","Dec 12 at 1:00 AM","Dec 12 at 1:00 PM","Dec 12 at 2:00 AM","Dec 12 at 2:00 PM","Dec 12 at 3:00 AM","Dec 12 at 3:00 PM","Dec 12 at 4:00 AM","Dec 12 at 4:00 PM","Dec 12 at 5:00 AM","Dec 12 at 5:00 PM","Dec 12 at 6:00 AM","Dec 12 at 6:00 PM","Dec 12 at 7:00 AM","Dec 12 at 7:00 PM","Dec 12 at 8:00 AM","Dec 12 at 8:00 PM","Dec 12 at 9:00 AM","Dec 12 at 9:00 PM","Dec 13 at 10:00 AM","Dec 13 at 11:00 AM","Dec 13 at 12:00 AM","Dec 13 at 12:00 PM","Dec 13 at 1:00 AM","Dec 13 at 1:00 PM","Dec 13 at 2:00 AM","Dec 13 at 2:00 PM","Dec 13 at 3:00 AM","Dec 13 at 4:00 AM","Dec 13 at 5:00 AM","Dec 13 at 6:00 AM","Dec 13 at 7:00 AM","Dec 13 at 8:00 AM","Dec 13 at 9:00 AM","Dec 6 at 10:00 PM","Dec 6 at 11:00 PM","Dec 6 at 2:00 PM","Dec 6 at 3:00 PM","Dec 6 at 4:00 PM","Dec 6 at 5:00 PM","Dec 6 at 6:00 PM","Dec 6 at 7:00 PM","Dec 6 at 8:00 PM","Dec 6 at 9:00 PM","Dec 7 at 10:00 AM","Dec 7 at 10:00 PM","Dec 7 at 11:00 AM","Dec 7 at 11:00 PM","Dec 7 at 12:00 AM","Dec 7 at 12:00 PM","Dec 7 at 1:00 AM","Dec 7 at 1:00 PM","Dec 7 at 2:00 AM","Dec 7 at 2:00 PM","Dec 7 at 3:00 AM","Dec 7 at 3:00 PM","Dec 7 at 4:00 AM","Dec 7 at 4:00 PM","Dec 7 at 5:00 AM","Dec 7 at 5:00 PM","Dec 7 at 6:00 AM","Dec 7 at 6:00 PM","Dec 7 at 7:00 AM","Dec 7 at 7:00 PM","Dec 7 at 8:00 AM","Dec 7 at 8:00 PM","Dec 7 at 9:00 AM","Dec 7 at 9:00 PM","Dec 8 at 10:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 AM","Dec 8 at 11:00 PM","Dec 8 at 12:00 AM","Dec 8 at 12:00 PM","Dec 8 at 1:00 AM","Dec 8 at 1:00 PM","Dec 8 at 2:00 AM","Dec 8 at 2:00 PM","Dec 8 at 3:00 AM","Dec 8 at 3:00 PM","Dec 8 at 4:00 AM","Dec 8 at 4:00 PM","Dec 8 at 5:00 AM","Dec 8 at 5:00 PM","Dec 8 at 6:00 AM","Dec 8 at 6:00 PM","Dec 8 at 7:00 AM","Dec 8 at 7:00 PM","Dec 8 at 8:00 AM","Dec 8 at 8:00 PM","Dec 8 at 9:00 AM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 10:00 PM","Dec 9 at 11:00 AM","Dec 9 at 11:00 PM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 3:00 PM","Dec 9 at 4:00 AM","Dec 9 at 4:00 PM","Dec 9 at 5:00 AM","Dec 9 at 5:00 PM","Dec 9 at 6:00 AM","Dec 9 at 6:00 PM","Dec 9 at 7:00 AM","Dec 9 at 7:00 PM","Dec 9 at 8:00 AM","Dec 9 at 8:00 PM","Dec 9 at 9:00 AM","Dec 9 at 9:00 PM"],  # Include all your timestamps
     "bitcoin buy": ["61","54","35","38","41","40","47","44","55","35","58","40","63","53","31","62","33","49","34","48","37","40","33","39","41","38","39","37","40","37","48","35","49","49","89","53","79","72","50","66","51","62","55","58","58","62","49","68","68","63","61","54","65","50","71","46","71","41","100","43","96","76","42","66","44","77","45","64","51","63","55","58","74","59","80","49","76","75","78","46","82","42","71","54","64","91","50","79","46","77","51","75","55","71","52","65","58","66","57","49","63","46","58","47","62","40","67","46","67","69","42","67","42","60","42","60","54","64","49","58","51","51","55","54","57","45","56","39","58","39","65","38","61","68","39","53","38","54","43","51","49","54","44","48","44","42","45","46","49","41","49","33","60","37","42","66","37","53","39","57","40","53","47","47","41","47","40","39"],
     "value1": ["61","68","51","49","55","56","57","64","62","44","66","48","73","66","48","63","42","59","44","55","51","57","42","56","50","60","55","52","56","51","55","45","56","62","80","54","74","59","56","69","55","70","56","67","60","77","53","78","58","76","63","60","67","64","76","58","75","59","94","53","93","70","48","85","50","65","48","73","57","71","65","75","62","62","90","61","93","58","82","57","99","63","70","60","86","87","52","77","56","86","60","78","64","81","65","84","65","71","76","72","73","58","79","63","74","54","88","60","79","79","51","68","53","65","57","68","69","74","70","77","67","65","73","58","61","55","74","53","79","56","90","54","78","77","57","73","57","77","57","74","71","81","70","72","67","72","75","66","72","55","82","58","100","56","53","84","54","84","69","72","75","67","80","71","68","74","65","65"],
     "sell bitcoin": ["22","26","31","32","27","31","37","22","39","27","36","30","50","36","35","41","20","35","28","39","28","49","37","49","27","63","23","56","47","25","37","33","36","32","53","32","40","42","52","33","33","36","28","39","26","50","31","56","31","63","33","59","60","26","54","26","42","26","45","22","38","26","43","43","35","38","43","38","20","42","29","44","48","95","65","77","60","55","76","55","66","56","93","60","59","63","88","71","75","68","60","64","51","85","47","70","34","100","34","70","40","66","37","63","41","78","52","62","46","44","71","31","100","35","89","36","86","36","96","34","25","42","26","49","37","22","54","30","45","26","39","37","46","35","31","32","45","32","32","37","25","32","27","31","19","35","20","33","29","41","59","25","49","34","32","35","47","31","35","26","30","34","35","36","24","27","23","44"],
@@ -316,13 +316,79 @@ def filtertje(df):
     return df_filtered
 
 ####################################################################################################################
+# trade
+from openi import TradesManager
+
+price = 120
+# Route for handling the login page logic
+@app.route('/tradeBTC', methods=['GET', 'POST'])
+def tradeBTC():
+    print("activater")
+    error = None        
+    if 'amount' in request.form:
+        try:
+            amount = float(request.form['amount'])
+            action = request.form['action']
+            print(action)
+            # Process based on the action (Update or Delete)
+            if action == 'long':
+                aa = amount/price 
+                print(price)
+                if acc.open_trade("long", aa, price):
+                    return True
+            elif action == 'short':
+
+                return f"Deleted amount: {processed_amount}"
+            else:
+                return "Invalid action!"
+        except ValueError:
+            return "Invalid amount! Please provide a valid number."
+    else:
+        return "Amount not provided!"
+
+def gettrades(trades):
+    table_content = "<table  id='newsTable'>"
+    table_content += "<tr><th>Trade ID</th><th>Trade Type</th><th>Quantity</th><th>Price</th><th>Live Price</th><th>Percentage Change</th><th>USD Dollars Profit</th><th>Action</th></tr>"
+
+    for trade in trades:
+        print(trade)
+        if trade.active:
+            table_content += f"<tr><td>{trade.trade_id}</td><td>{trade.trade_type}</td><td>{trade.quantity}</td><td>{trade.price}</td>"
+            table_content += f"<td><input type='number' id='liveprice_{trade.trade_id}' value='{trade.price}'></td>"
+            table_content += f"<td><span id='percentage_change_{trade.trade_id}'>0.00%</span></td>"
+            table_content += f"<td><span id='usd_profit_{trade.trade_id}'>$0.00</span></td>"
+            table_content += f"<td><button onclick='calculateValues({trade.trade_id})'>Close</button>"
+            table_content += f"<input type='hidden' id='tradeid_{trade.trade_id}' value='{trade.trade_id}'></td></tr>"
+    
+    table_content += "</table>"
+
+    # JavaScript function to calculate values based on live price
+    table_content += "<script>"
+    table_content += "function calculateValues(tradeId) {"
+    table_content += "    let livePrice = parseFloat(document.getElementById(`liveprice_${tradeId}`).value);"
+    table_content += "    let tradePrice = parseFloat(document.getElementById(`price_${tradeId}`).innerText);"
+    table_content += "    let percentageChangeElement = document.getElementById(`percentage_change_${tradeId}`);"
+    table_content += "    let usdProfitElement = document.getElementById(`usd_profit_${tradeId}`);"
+    table_content += "    let percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;"
+    table_content += "    let usdProfit = (livePrice - tradePrice) * trade.quantity;"
+    table_content += "    percentageChangeElement.innerText = percentageChange.toFixed(2) + '%';"
+    table_content += "    usdProfitElement.innerText = '$' + usdProfit.toFixed(2);"
+    table_content += "}"
+    table_content += "</script>"
+
+    return table_content
+
+acc = TradesManager()
+
+
 
 # Serve root index file
 @app.route('/')
 def index():
     print("Loading Index..")
-    return render_template('index.html',  table_html = fetchnews(), firstchart = printchart())
+    return render_template('index.html',  table_html = fetchnews(), firstchart = printchart(), Atrades = gettrades(acc.trades))
     
 if __name__ == '__main__':
+    
     socketio.run(app)
     

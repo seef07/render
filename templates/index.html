@@ -58,9 +58,11 @@
             background-color: #333;
         }
         #right-column {
-    width: 48%;
+    width: 50%;
     display: flex;
+    position: relative;
     flex-wrap: wrap;
+    height: 1000px;
 }
 #trading,
 #trading2,
@@ -68,13 +70,15 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    width: 48%;
+    width: 45%;
     margin-bottom: 10px; /* Adjust the margin-bottom as needed */
     box-sizing: border-box;
     height: 450px !important;
-    margin-right: 2%;
 }
-
+#trading,
+#trading2 {
+    margin-bottom: 5px !important; /* Adjust the margin-bottom as needed */
+}
 #trading3 {
     width: 100%;
     margin-right: 0;
@@ -148,17 +152,18 @@ button {
             </div>
             <div id="trading2">
                 <h2>OK</h2>
-                <form>
+                <form action="/tradeBTC" method='POST'>
                     <div id="livePrice"></div>
                     <label for="sellAmount">Long:</label>
-                    <input type="number" id="longAmount" placeholder="Enter amount">
-
-                    <label for="limitPrice">Short</label>
-                    <input type="number" id="limitPrice" placeholder="Enter limit price">
-
-                    <button type="button" onclick="buy()">Buy</button>
-                    <button type="button" onclick="sell()">Sell</button>
+                    <input type="number" id="limitPrice" name="amount" placeholder="Enter usd amount">
+                    <button type="submit" name="action" value="long">Long</button>
+                    <br><br>
                 </form>
+            </div>
+            
+
+            <div id="trading3">
+               {{ Atrades | safe }}
             </div>
         </div>
     </div>
