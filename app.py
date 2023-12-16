@@ -259,8 +259,7 @@ from datetime import datetime
 
 
 data = {
-    "timestamp": ["Dec 10 at 10:00 PM","Dec 10 at 11:00 AM","Dec 10 at 11:00 PM","Dec 10 at 12:00 AM","Dec 10 at 12:00 PM","Dec 10 at 1:00 AM","Dec 10 at 1:00 PM","Dec 10 at 2:00 AM","Dec 10 at 2:00 PM","Dec 10 at 3:00 AM","Dec 10 at 3:00 PM","Dec 10 at 4:00 AM","Dec 10 at 4:00 PM","Dec 10 at 5:00 AM","Dec 10 at 5:00 PM","Dec 10 at 6:00 AM","Dec 10 at 6:00 PM","Dec 10 at 7:00 AM","Dec 10 at 7:00 PM","Dec 10 at 8:00 AM","Dec 10 at 8:00 PM","Dec 10 at 9:00 AM","Dec 10 at 9:00 PM","Dec 11 at 10:00 AM","Dec 11 at 10:00 PM","Dec 11 at 11:00 AM","Dec 11 at 11:00 PM","Dec 11 at 12:00 AM","Dec 11 at 12:00 PM","Dec 11 at 1:00 AM","Dec 11 at 1:00 PM","Dec 11 at 2:00 AM","Dec 11 at 2:00 PM","Dec 11 at 3:00 AM","Dec 11 at 3:00 PM","Dec 11 at 4:00 AM","Dec 11 at 4:00 PM","Dec 11 at 5:00 AM","Dec 11 at 5:00 PM","Dec 11 at 6:00 AM","Dec 11 at 6:00 PM","Dec 11 at 7:00 AM","Dec 11 at 7:00 PM","Dec 11 at 8:00 AM","Dec 11 at 8:00 PM","Dec 11 at 9:00 AM","Dec 11 at 9:00 PM","Dec 12 at 10:00 AM","Dec 12 at 10:00 PM","Dec 12 at 11:00 AM","Dec 12 at 11:00 PM","Dec 12 at 12:00 AM","Dec 12 at 12:00 PM","Dec 12 at 1:00 AM","Dec 12 at 1:00 PM","Dec 12 at 2:00 AM","Dec 12 at 2:00 PM","Dec 12 at 3:00 AM","Dec 12 at 3:00 PM","Dec 12 at 4:00 AM","Dec 12 at 4:00 PM","Dec 12 at 5:00 AM","Dec 12 at 5:00 PM","Dec 12 at 6:00 AM","Dec 12 at 6:00 PM","Dec 12 at 7:00 AM","Dec 12 at 7:00 PM","Dec 12 at 8:00 AM","Dec 12 at 8:00 PM","Dec 12 at 9:00 AM","Dec 12 at 9:00 PM","Dec 13 at 10:00 AM","Dec 13 at 11:00 AM","Dec 13 at 12:00 AM","Dec 13 at 12:00 PM","Dec 13 at 1:00 AM","Dec 13 at 1:00 PM","Dec 13 at 2:00 AM","Dec 13 at 2:00 PM","Dec 13 at 3:00 AM","Dec 13 at 4:00 AM","Dec 13 at 5:00 AM","Dec 13 at 6:00 AM","Dec 13 at 7:00 AM","Dec 13 at 8:00 AM","Dec 13 at 9:00 AM","Dec 6 at 10:00 PM","Dec 6 at 11:00 PM","Dec 6 at 2:00 PM","Dec 6 at 3:00 PM","Dec 6 at 4:00 PM","Dec 6 at 5:00 PM","Dec 6 at 6:00 PM","Dec 6 at 7:00 PM","Dec 6 at 8:00 PM","Dec 6 at 9:00 PM","Dec 7 at 10:00 AM","Dec 7 at 10:00 PM","Dec 7 at 11:00 AM","Dec 7 at 11:00 PM","Dec 7 at 12:00 AM","Dec 7 at 12:00 PM","Dec 7 at 1:00 AM","Dec 7 at 1:00 PM","Dec 7 at 2:00 AM","Dec 7 at 2:00 PM","Dec 7 at 3:00 AM","Dec 7 at 3:00 PM","Dec 7 at 4:00 AM","Dec 7 at 4:00 PM","Dec 7 at 5:00 AM","Dec 7 at 5:00 PM","Dec 7 at 6:00 AM","Dec 7 at 6:00 PM","Dec 7 at 7:00 AM","Dec 7 at 7:00 PM","Dec 7 at 8:00 AM","Dec 7 at 8:00 PM","Dec 7 at 9:00 AM","Dec 7 at 9:00 PM","Dec 8 at 10:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 AM","Dec 8 at 11:00 PM","Dec 8 at 12:00 AM","Dec 8 at 12:00 PM","Dec 8 at 1:00 AM","Dec 8 at 1:00 PM","Dec 8 at 2:00 AM","Dec 8 at 2:00 PM","Dec 8 at 3:00 AM","Dec 8 at 3:00 PM","Dec 8 at 4:00 AM","Dec 8 at 4:00 PM","Dec 8 at 5:00 AM","Dec 8 at 5:00 PM","Dec 8 at 6:00 AM","Dec 8 at 6:00 PM","Dec 8 at 7:00 AM","Dec 8 at 7:00 PM","Dec 8 at 8:00 AM","Dec 8 at 8:00 PM","Dec 8 at 9:00 AM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 10:00 PM","Dec 9 at 11:00 AM","Dec 9 at 11:00 PM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 3:00 PM","Dec 9 at 4:00 AM","Dec 9 at 4:00 PM","Dec 9 at 5:00 AM","Dec 9 at 5:00 PM","Dec 9 at 6:00 AM","Dec 9 at 6:00 PM","Dec 9 at 7:00 AM","Dec 9 at 7:00 PM","Dec 9 at 8:00 AM","Dec 9 at 8:00 PM","Dec 9 at 9:00 AM","Dec 9 at 9:00 PM"],  # Include all your timestamps
-    "bitcoin buy": ["61","54","35","38","41","40","47","44","55","35","58","40","63","53","31","62","33","49","34","48","37","40","33","39","41","38","39","37","40","37","48","35","49","49","89","53","79","72","50","66","51","62","55","58","58","62","49","68","68","63","61","54","65","50","71","46","71","41","100","43","96","76","42","66","44","77","45","64","51","63","55","58","74","59","80","49","76","75","78","46","82","42","71","54","64","91","50","79","46","77","51","75","55","71","52","65","58","66","57","49","63","46","58","47","62","40","67","46","67","69","42","67","42","60","42","60","54","64","49","58","51","51","55","54","57","45","56","39","58","39","65","38","61","68","39","53","38","54","43","51","49","54","44","48","44","42","45","46","49","41","49","33","60","37","42","66","37","53","39","57","40","53","47","47","41","47","40","39"],
+    "timestamp": ["Dec 10 at 10:00 AM","Dec 10 at 10:00 PM","Dec 10 at 11:00 AM","Dec 10 at 11:00 PM","Dec 10 at 12:00 AM","Dec 10 at 12:00 PM","Dec 10 at 1:00 AM","Dec 10 at 1:00 PM","Dec 10 at 2:00 AM","Dec 10 at 2:00 PM","Dec 10 at 3:00 AM","Dec 10 at 3:00 PM","Dec 10 at 4:00 AM","Dec 10 at 4:00 PM","Dec 10 at 5:00 AM","Dec 10 at 5:00 PM","Dec 10 at 6:00 AM","Dec 10 at 6:00 PM","Dec 10 at 7:00 AM","Dec 10 at 7:00 PM","Dec 10 at 8:00 AM","Dec 10 at 8:00 PM","Dec 10 at 9:00 AM","Dec 10 at 9:00 PM","Dec 11 at 10:00 AM","Dec 11 at 10:00 PM","Dec 11 at 11:00 AM","Dec 11 at 11:00 PM","Dec 11 at 12:00 AM","Dec 11 at 12:00 PM","Dec 11 at 1:00 AM","Dec 11 at 1:00 PM","Dec 11 at 2:00 AM","Dec 11 at 2:00 PM","Dec 11 at 3:00 AM","Dec 11 at 3:00 PM","Dec 11 at 4:00 AM","Dec 11 at 4:00 PM","Dec 11 at 5:00 AM","Dec 11 at 5:00 PM","Dec 11 at 6:00 AM","Dec 11 at 6:00 PM","Dec 11 at 7:00 AM","Dec 11 at 7:00 PM","Dec 11 at 8:00 AM","Dec 11 at 8:00 PM","Dec 11 at 9:00 AM","Dec 11 at 9:00 PM","Dec 12 at 10:00 AM","Dec 12 at 10:00 PM","Dec 12 at 11:00 AM","Dec 12 at 11:00 PM","Dec 12 at 12:00 AM","Dec 12 at 12:00 PM","Dec 12 at 1:00 AM","Dec 12 at 1:00 PM","Dec 12 at 2:00 AM","Dec 12 at 2:00 PM","Dec 12 at 3:00 AM","Dec 12 at 3:00 PM","Dec 12 at 4:00 AM","Dec 12 at 4:00 PM","Dec 12 at 5:00 AM","Dec 12 at 5:00 PM","Dec 12 at 6:00 AM","Dec 12 at 6:00 PM","Dec 12 at 7:00 AM","Dec 12 at 7:00 PM","Dec 12 at 8:00 AM","Dec 12 at 8:00 PM","Dec 12 at 9:00 AM","Dec 12 at 9:00 PM","Dec 13 at 10:00 AM","Dec 13 at 10:00 PM","Dec 13 at 11:00 AM","Dec 13 at 11:00 PM","Dec 13 at 12:00 AM","Dec 13 at 12:00 PM","Dec 13 at 1:00 AM","Dec 13 at 1:00 PM","Dec 13 at 2:00 AM","Dec 13 at 2:00 PM","Dec 13 at 3:00 AM","Dec 13 at 3:00 PM","Dec 13 at 4:00 AM","Dec 13 at 4:00 PM","Dec 13 at 5:00 AM","Dec 13 at 5:00 PM","Dec 13 at 6:00 AM","Dec 13 at 6:00 PM","Dec 13 at 7:00 AM","Dec 13 at 7:00 PM","Dec 13 at 8:00 AM","Dec 13 at 8:00 PM","Dec 13 at 9:00 AM","Dec 13 at 9:00 PM","Dec 14 at 10:00 AM","Dec 14 at 10:00 PM","Dec 14 at 11:00 AM","Dec 14 at 11:00 PM","Dec 14 at 12:00 AM","Dec 14 at 12:00 PM","Dec 14 at 1:00 AM","Dec 14 at 1:00 PM","Dec 14 at 2:00 AM","Dec 14 at 2:00 PM","Dec 14 at 3:00 AM","Dec 14 at 3:00 PM","Dec 14 at 4:00 AM","Dec 14 at 4:00 PM","Dec 14 at 5:00 AM","Dec 14 at 5:00 PM","Dec 14 at 6:00 AM","Dec 14 at 6:00 PM","Dec 14 at 7:00 AM","Dec 14 at 7:00 PM","Dec 14 at 8:00 AM","Dec 14 at 8:00 PM","Dec 14 at 9:00 AM","Dec 14 at 9:00 PM","Dec 15 at 10:00 AM","Dec 15 at 11:00 AM","Dec 15 at 12:00 AM","Dec 15 at 12:00 PM","Dec 15 at 1:00 AM","Dec 15 at 1:00 PM","Dec 15 at 2:00 AM","Dec 15 at 3:00 AM","Dec 15 at 4:00 AM","Dec 15 at 5:00 AM","Dec 15 at 6:00 AM","Dec 15 at 7:00 AM","Dec 15 at 8:00 AM","Dec 15 at 9:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 PM","Dec 8 at 2:00 PM","Dec 8 at 3:00 PM","Dec 8 at 4:00 PM","Dec 8 at 5:00 PM","Dec 8 at 6:00 PM","Dec 8 at 7:00 PM","Dec 8 at 8:00 PM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 10:00 PM","Dec 9 at 11:00 AM","Dec 9 at 11:00 PM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 3:00 PM","Dec 9 at 4:00 AM","Dec 9 at 4:00 PM","Dec 9 at 5:00 AM","Dec 9 at 5:00 PM","Dec 9 at 6:00 AM","Dec 9 at 6:00 PM","Dec 9 at 7:00 AM","Dec 9 at 7:00 PM","Dec 9 at 8:00 AM","Dec 9 at 8:00 PM","Dec 9 at 9:00 AM","Dec 9 at 9:00 PM"],
     "value1": ["61","68","51","49","55","56","57","64","62","44","66","48","73","66","48","63","42","59","44","55","51","57","42","56","50","60","55","52","56","51","55","45","56","62","80","54","74","59","56","69","55","70","56","67","60","77","53","78","58","76","63","60","67","64","76","58","75","59","94","53","93","70","48","85","50","65","48","73","57","71","65","75","62","62","90","61","93","58","82","57","99","63","70","60","86","87","52","77","56","86","60","78","64","81","65","84","65","71","76","72","73","58","79","63","74","54","88","60","79","79","51","68","53","65","57","68","69","74","70","77","67","65","73","58","61","55","74","53","79","56","90","54","78","77","57","73","57","77","57","74","71","81","70","72","67","72","75","66","72","55","82","58","100","56","53","84","54","84","69","72","75","67","80","71","68","74","65","65"],
     "sell bitcoin": ["22","26","31","32","27","31","37","22","39","27","36","30","50","36","35","41","20","35","28","39","28","49","37","49","27","63","23","56","47","25","37","33","36","32","53","32","40","42","52","33","33","36","28","39","26","50","31","56","31","63","33","59","60","26","54","26","42","26","45","22","38","26","43","43","35","38","43","38","20","42","29","44","48","95","65","77","60","55","76","55","66","56","93","60","59","63","88","71","75","68","60","64","51","85","47","70","34","100","34","70","40","66","37","63","41","78","52","62","46","44","71","31","100","35","89","36","86","36","96","34","25","42","26","49","37","22","54","30","45","26","39","37","46","35","31","32","45","32","32","37","25","32","27","31","19","35","20","33","29","41","59","25","49","34","32","35","47","31","35","26","30","34","35","36","24","27","23","44"],
     "crypto sell": ["56","64","37","33","37","37","45","60","55","41","57","38","70","70","25","47","32","54","50","44","48","48","46","35","43","50","41","36","51","53","40","44","48","62","88","49","82","60","51","77","56","61","43","63","53","58","36","83","52","82","57","69","54","61","56","49","62","42","76","40","100","72","43","79","25","52","49","65","52","50","50","52","60","22","87","52","83","55","76","35","89","42","62","51","69","100","52","58","48","85","51","79","58","72","74","67","66","49","64","42","67","56","59","59","63","45","86","49","70","65","42","58","37","57","51","58","44","57","69","60","58","42","35","65","64","39","66","46","65","52","99","53","94","64","59","72","42","69","57","69","59","74","59","51","65","43","59","51","59","55","83","48","80","44","47","92","48","81","57","71","78","49","62","57","45","63","50","62"],
@@ -270,7 +269,6 @@ data = {
 ,
     }
 data["value1"] = pd.to_numeric(data["value1"], errors="coerce")
-data["bitcoin buy"] = pd.to_numeric(data["bitcoin buy"], errors="coerce")
 data["sell bitcoin"] = pd.to_numeric(data["sell bitcoin"], errors="coerce")
 data["crypto sell"] = pd.to_numeric(data["crypto sell"], errors="coerce")
 data["bitcoin"] = pd.to_numeric(data["bitcoin"], errors="coerce")
@@ -305,8 +303,21 @@ def gettrend(start):
     return(df_fil)
 
 #############################################################################################################################################################
-# filter
+# filter & btcprice function
+def btcprice():
+    url = 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT'
 
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            bitcoin_price = float(data['price'])
+            return bitcoin_price
+        else:
+            return None
+    except requests.RequestException as e:
+        print("Request Error:", e)
+        return None
 
 def filtertje(df):
     # Drop rows where 'Source' is equal to 'Twitter'
@@ -319,7 +330,6 @@ def filtertje(df):
 # trade
 from openi import TradesManager
 
-price = 120
 # Route for handling the login page logic
 @app.route('/tradeBTC', methods=['GET', 'POST'])
 def tradeBTC():
@@ -330,21 +340,24 @@ def tradeBTC():
             amount = float(request.form['amount'])
             action = request.form['action']
             print(action)
+            price = btcprice()
             # Process based on the action (Update or Delete)
             if action == 'long':
                 aa = amount/price 
                 print(price)
                 if acc.open_trade("long", aa, price):
-                    return redirect(url_for('/'))
+                    return redirect(url_for('index')) 
             elif action == 'short':
 
                 return f"Deleted amount: {processed_amount}"
             else:
                 return "Invalid action!"
+            return redirect(url_for('index')) 
         except ValueError:
             return "Invalid amount! Please provide a valid number."
     else:
         return "Amount not provided!"
+    return redirect(url_for('index')) 
 
 from flask import request
 
@@ -354,58 +367,67 @@ def close():
     error = None
     if 'tradeid' in request.args or 'tradeid' in request.form:
         trade_id = int(request.args.get('tradeid') or request.form.get('tradeid'))  # Assign to trade_id instead of tradeid
-        if acc.close_trade_by_id(trade_id, 125):
+        if acc.close_trade_by_id(trade_id, btcprice()):
             print("success")  # Corrected spelling of 'success'
-            return "Trade successfully closed"  # Add a return statement for response handling
+            return redirect(url_for('index'))   # Add a return statement for response handling
     else:
         print("Trade ID not provided!")  # Modified error message for clarity
         return "Trade ID not provided!"
+    return redirect(url_for('index')) 
 
 def gettrades(trades):
-    table_content = "<table  id='newsTable'>"
-    table_content += "<tr><th>Trade ID</th><th>Trade Type</th><th>Quantity</th><th>Price</th><th>Live Price</th><th>Percentage Change</th><th>USD Dollars Profit</th><th>Action</th></tr>"
+    table_content = "<table id='newsTable'>"
+    table_content += "<tr><th>Trade ID</th><th>Trade Type</th><th>Quantity</th><th>Price</th><th>Percentage Change</th><th>USD Dollars Profit</th><th>Action</th></tr>"
 
     for trade in trades:
         if trade.active:
-            table_content += f"<tr><td>{trade.trade_id}</td><td>{trade.trade_type}</td><td>{trade.quantity}</td><td>{trade.price}</td>"
-            table_content += f"<td><input type='number' id='liveprice_{trade.trade_id}' value='{trade.price}'></td>"
-            table_content += f"<td><span id='percentage_change_{trade.trade_id}'>0.00%</span></td>"
-            table_content += f"<td><span id='usd_profit_{trade.trade_id}'>$0.00</span></td>"
-            table_content += f"<td><form method='post' action='/close'>"  # Opening form tag
+            table_content += f"<tr><td>{trade.trade_id}</td><td>{trade.trade_type}</td><td>{trade.quantity}</td><td id='bp_{trade.trade_id}'>{trade.price}</td>"
+            table_content += f"<td><span class='percentage_change' data-tradeid='{trade.trade_id}'>0.00%</span></td>"
+            table_content += f"<td><span class='usd_profit' data-tradeid='{trade.trade_id}'>$0.00</span></td>"
+            table_content += f"<td><form method='post' action='/close'>"  
             table_content += f"<button type='submit' name='tradeid' value='{trade.trade_id}'>Close</button>"
-            table_content += f"<input type='hidden' id='tradeid_{trade.trade_id}' name='tradeid' value='{trade.trade_id}'>"  # Hidden input for trade ID
-            table_content += f"</form></td></tr>"  # Closing form tag and table row
+            table_content += f"<input type='hidden' id='tradeid_{trade.trade_id}' name='tradeid' value='{trade.trade_id}'>" 
+            table_content += f"</form></td></tr>"  
 
     table_content += "</table>"
 
-    # JavaScript function for value calculations
-    calculate_values_script = """
+    # JavaScript function for live updates
+    live_updates_script = """
     <script>
-    function updateValues(tradeId) {
-        const livePriceInput = document.getElementById(`liveprice_${tradeId}`);
-        const percentageChangeSpan = document.getElementById(`percentage_change_${tradeId}`);
-        const usdProfitSpan = document.getElementById(`usd_profit_${tradeId}`);
-        
-        livePriceInput.addEventListener('input', function() {
-            const livePrice = parseFloat(livePriceInput.value);
-            const tradePrice = parseFloat(document.getElementById(`liveprice_${tradeId}`).value); // Retrieve trade price from live price input
+    document.addEventListener('input', function(event) {
+        if (event.target && event.target.id === 'livePrice') {
+            console.log('Live Price Changed:', event.target.value);
+            const livePrice = parseFloat(event.target.value);
+            const rows = document.querySelectorAll('#newsTable tbody tr');
             
-            // Calculate percentage change and USD profit
-            const percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;
-            const usdProfit = (livePrice - tradePrice) * parseInt(document.getElementById(`quantity_${tradeId}`).textContent); // Assuming quantity is retrieved from an element
-            
-            // Update span elements with calculated values
-            percentageChangeSpan.textContent = `${percentageChange.toFixed(2)}%`;
-            usdProfitSpan.textContent = `$${usdProfit.toFixed(2)}`;
-        });
-    }
+            rows.forEach(row => {
+                const tradeId = row.querySelector('td:first-child').textContent;
+                const tradePrice = parseFloat(row.querySelector(`#bp_${tradeId}`).textContent);
+                const quantity = parseInt(row.querySelector(`#quantity_${tradeId}`).textContent); // Assuming quantity is retrieved from an element
+
+                const percentageChangeSpan = row.querySelector(`.percentage_change[data-tradeid='${tradeId}']`);
+                const usdProfitSpan = row.querySelector(`.usd_profit[data-tradeid='${tradeId}']`);
+                
+                console.log('Processing Trade ID:', tradeId);
+                
+                // Calculate percentage change and USD profit for each row
+                const percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;
+                const usdProfit = (livePrice - tradePrice) * quantity;
+                
+                console.log('Percentage Change:', percentageChange);
+                console.log('USD Profit:', usdProfit);
+                
+                // Update span elements with calculated values
+                percentageChangeSpan.textContent = `${percentageChange.toFixed(2)}%`;
+                usdProfitSpan.textContent = `$${usdProfit.toFixed(2)}`;
+            });
+        }
+    });
     </script>
     """
 
-    # Append the JavaScript function to your table content
-    table_content += calculate_values_script
+    return table_content + live_updates_script
 
-    return table_content
 
 
 acc = TradesManager()
@@ -416,7 +438,9 @@ acc = TradesManager()
 @app.route('/')
 def index():
     print("Loading Index..")
-    return render_template('index.html',  table_html = fetchnews(), firstchart = printchart(), Atrades = gettrades(acc.trades))
+    print(acc.balance)
+    print("######")
+    return render_template('index.html',  table_html = fetchnews(), firstchart = printchart(), Atrades = gettrades(acc.trades), balance = acc.balance)
     
 if __name__ == '__main__':
     

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Dashboard</title>
+    <title>Sentiment Dashboard</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
     <style>
@@ -58,11 +58,12 @@
             background-color: #333;
         }
         #right-column {
-    width: 50%;
+    width: 40%;
     display: flex;
     position: relative;
     flex-wrap: wrap;
-    height: 1000px;
+    height: 940px;
+    margin-left:15px;
 }
 #trading,
 #trading2,
@@ -70,17 +71,20 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    width: 45%;
+    width: 46%;
     margin-bottom: 10px; /* Adjust the margin-bottom as needed */
     box-sizing: border-box;
     height: 450px !important;
+}
+#trading{
+    width: 50%;
 }
 #trading,
 #trading2 {
     margin-bottom: 5px !important; /* Adjust the margin-bottom as needed */
 }
 #trading3 {
-    width: 100%;
+    width: 96%;
     margin-right: 0;
 }
 
@@ -112,11 +116,45 @@ button {
 #liveChart {
             max-height: 400px;
         }
+        #navbar {
+            background-color: #121212;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
 
+        #navbar ul {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+
+        #navbar ul li {
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #navbar ul li:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
 <body>
+    <div id="navbar">
+        <h1></h1>
+        <ul>
+            <li>Home</li>
+            <li>Balance: </li>
+            <li>{{ balance | safe }}</li>
+        </ul>
+    </div>
+
     <div id="dashboard">
         <div id="left-column">
             <div id="chart1">
