@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class Trade:
     def __init__(self, trade_id: int, trade_type: str, quantity: int, price: float):
         self.trade_id = trade_id
