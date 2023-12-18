@@ -40,6 +40,12 @@ class TradesManager:
                     self.balance += current_price * quantity
                     trade.close_trade()
                     return True
+                elif tradetype == "short":
+                    pnl = inprice - current_price 
+                    self.balance += pnl * quantity
+                    self.balance += inprice * quantity
+                    trade.close_trade()
+                    return True
         else:
             print("Trade ID not found!")
             return False

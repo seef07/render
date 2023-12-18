@@ -93,7 +93,12 @@ form {
     flex-direction: column;
    /* Align form elements to the right */
 }
-
+.color-negative {
+    color: red;
+}
+.color-positive {
+    color: #1DB954;
+}
 label {
     margin-bottom: 10px;
 }
@@ -165,7 +170,6 @@ button {
                 <table>
                     <thead>
                         <tr>
-                            <th>Index</th>
                             <th>Source</th>
                             <th>receivedAt</th>
                             <th>Source</th>
@@ -189,12 +193,14 @@ button {
   
             </div>
             <div id="trading2">
-                <h2>OK</h2>
+                <h2>Trade (paper)</h2>
                 <form action="/tradeBTC" method='POST'>
                     <div id="livePrice"></div>
-                    <label for="sellAmount">Long:</label>
+                    <label for="sellAmount">Enter USD long or short amount:</label>
                     <input type="number" id="limitPrice" name="amount" placeholder="Enter usd amount">
                     <button type="submit" name="action" value="long">Long</button>
+                    <br>
+                    <button type="submit" name="action" value="short" style="background-color: red;">short</button>
                     <br><br>
                 </form>
             </div>

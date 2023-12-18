@@ -197,15 +197,21 @@ def printchart():
 
     return grapp
 ###################################################################### 
+
+# Assume other necessary functions and variables are defined
+
 def fetchnews():
-    url =  'https://api.phoenixnews.io/getLastNews?limit=200'
+    url = 'https://api.phoenixnews.io/getLastNews?limit=200'
     response = requests.get(url)
     data = response.json()
-    df = filtertje(pd.DataFrame(data))    
+    df = filtertje(pd.DataFrame(data))
+
     # List of columns to remove
     df['Text'] = df['body'].fillna('') + ' ' + df['description'].fillna('')
-
-    columns_to_remove = ['_id','body','image3','image4', 'imageQuote2', 'imageQuote3', 'imageQuote4','image', 'description', 'createdAt', 'url', 'title', 'suggestions', 'category', 'isReply', 'coin', 'image1', 'username', 'name', 'icon', 'twitterId', 'tweetId', 'isRetweet', 'isQuote', 'image', 'imageQuote', 'image2', "important"]
+    columns_to_remove = ['_id', 'body', 'image3', 'image4', 'imageQuote2', 'imageQuote3', 'imageQuote4', 'image',
+                         'description', 'createdAt', 'url', 'title', 'suggestions', 'category', 'isReply', 'coin',
+                         'image1', 'username', 'name', 'icon', 'twitterId', 'tweetId', 'isRetweet', 'isQuote',
+                         'image', 'imageQuote', 'image2', "important"]
 
     # Drop specified columns
     df = df.drop(columns=columns_to_remove, errors='ignore')
@@ -213,12 +219,23 @@ def fetchnews():
     df['receivedAt'] = df['receivedAt'].apply(lambda x: datetime.strptime(x, '%Y-%m-%dT%H:%M:%S.%fZ').strftime('%Y-%m-%d %H:%M:%S'))
     df['receivedAt'] = pd.to_datetime(df['receivedAt'])
 
-
     global_df['receivedAt'] = df['receivedAt']
     global_df['receivedAt'] = global_df['receivedAt'] + timedelta(hours=1)
     global_df['score'] = df['score']
-    
-    table_html = df.style.set_table_styles(styles).render(classes='table', index=False)
+
+    # Fetching the table HTML
+    table_html = df.to_html(classes='table', index=False)
+
+    # Add classes to score cells in the HTML table
+    for index, row in df.iterrows():
+        score_class = 'neutral'
+        if row['score'] > 0.5:
+            score_class = 'positive'
+        elif row['score'] < 0.5:
+            score_class = 'negative'
+
+        table_html = table_html.replace(f'<td>{row["score"]}</td>', f'<td class="color-{score_class}">{row["score"]}</td>')
+
     # Extract only the tbody content
     tbody_start = table_html.find('<tbody>')
     tbody_end = table_html.find('</tbody>') + len('</tbody>')
@@ -259,7 +276,7 @@ from datetime import datetime
 
 
 data = {
-    "timestamp": ["Dec 10 at 10:00 AM","Dec 10 at 10:00 PM","Dec 10 at 11:00 AM","Dec 10 at 11:00 PM","Dec 10 at 12:00 AM","Dec 10 at 12:00 PM","Dec 10 at 1:00 AM","Dec 10 at 1:00 PM","Dec 10 at 2:00 AM","Dec 10 at 2:00 PM","Dec 10 at 3:00 AM","Dec 10 at 3:00 PM","Dec 10 at 4:00 AM","Dec 10 at 4:00 PM","Dec 10 at 5:00 AM","Dec 10 at 5:00 PM","Dec 10 at 6:00 AM","Dec 10 at 6:00 PM","Dec 10 at 7:00 AM","Dec 10 at 7:00 PM","Dec 10 at 8:00 AM","Dec 10 at 8:00 PM","Dec 10 at 9:00 AM","Dec 10 at 9:00 PM","Dec 11 at 10:00 AM","Dec 11 at 10:00 PM","Dec 11 at 11:00 AM","Dec 11 at 11:00 PM","Dec 11 at 12:00 AM","Dec 11 at 12:00 PM","Dec 11 at 1:00 AM","Dec 11 at 1:00 PM","Dec 11 at 2:00 AM","Dec 11 at 2:00 PM","Dec 11 at 3:00 AM","Dec 11 at 3:00 PM","Dec 11 at 4:00 AM","Dec 11 at 4:00 PM","Dec 11 at 5:00 AM","Dec 11 at 5:00 PM","Dec 11 at 6:00 AM","Dec 11 at 6:00 PM","Dec 11 at 7:00 AM","Dec 11 at 7:00 PM","Dec 11 at 8:00 AM","Dec 11 at 8:00 PM","Dec 11 at 9:00 AM","Dec 11 at 9:00 PM","Dec 12 at 10:00 AM","Dec 12 at 10:00 PM","Dec 12 at 11:00 AM","Dec 12 at 11:00 PM","Dec 12 at 12:00 AM","Dec 12 at 12:00 PM","Dec 12 at 1:00 AM","Dec 12 at 1:00 PM","Dec 12 at 2:00 AM","Dec 12 at 2:00 PM","Dec 12 at 3:00 AM","Dec 12 at 3:00 PM","Dec 12 at 4:00 AM","Dec 12 at 4:00 PM","Dec 12 at 5:00 AM","Dec 12 at 5:00 PM","Dec 12 at 6:00 AM","Dec 12 at 6:00 PM","Dec 12 at 7:00 AM","Dec 12 at 7:00 PM","Dec 12 at 8:00 AM","Dec 12 at 8:00 PM","Dec 12 at 9:00 AM","Dec 12 at 9:00 PM","Dec 13 at 10:00 AM","Dec 13 at 10:00 PM","Dec 13 at 11:00 AM","Dec 13 at 11:00 PM","Dec 13 at 12:00 AM","Dec 13 at 12:00 PM","Dec 13 at 1:00 AM","Dec 13 at 1:00 PM","Dec 13 at 2:00 AM","Dec 13 at 2:00 PM","Dec 13 at 3:00 AM","Dec 13 at 3:00 PM","Dec 13 at 4:00 AM","Dec 13 at 4:00 PM","Dec 13 at 5:00 AM","Dec 13 at 5:00 PM","Dec 13 at 6:00 AM","Dec 13 at 6:00 PM","Dec 13 at 7:00 AM","Dec 13 at 7:00 PM","Dec 13 at 8:00 AM","Dec 13 at 8:00 PM","Dec 13 at 9:00 AM","Dec 13 at 9:00 PM","Dec 14 at 10:00 AM","Dec 14 at 10:00 PM","Dec 14 at 11:00 AM","Dec 14 at 11:00 PM","Dec 14 at 12:00 AM","Dec 14 at 12:00 PM","Dec 14 at 1:00 AM","Dec 14 at 1:00 PM","Dec 14 at 2:00 AM","Dec 14 at 2:00 PM","Dec 14 at 3:00 AM","Dec 14 at 3:00 PM","Dec 14 at 4:00 AM","Dec 14 at 4:00 PM","Dec 14 at 5:00 AM","Dec 14 at 5:00 PM","Dec 14 at 6:00 AM","Dec 14 at 6:00 PM","Dec 14 at 7:00 AM","Dec 14 at 7:00 PM","Dec 14 at 8:00 AM","Dec 14 at 8:00 PM","Dec 14 at 9:00 AM","Dec 14 at 9:00 PM","Dec 15 at 10:00 AM","Dec 15 at 11:00 AM","Dec 15 at 12:00 AM","Dec 15 at 12:00 PM","Dec 15 at 1:00 AM","Dec 15 at 1:00 PM","Dec 15 at 2:00 AM","Dec 15 at 3:00 AM","Dec 15 at 4:00 AM","Dec 15 at 5:00 AM","Dec 15 at 6:00 AM","Dec 15 at 7:00 AM","Dec 15 at 8:00 AM","Dec 15 at 9:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 PM","Dec 8 at 2:00 PM","Dec 8 at 3:00 PM","Dec 8 at 4:00 PM","Dec 8 at 5:00 PM","Dec 8 at 6:00 PM","Dec 8 at 7:00 PM","Dec 8 at 8:00 PM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 10:00 PM","Dec 9 at 11:00 AM","Dec 9 at 11:00 PM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 3:00 PM","Dec 9 at 4:00 AM","Dec 9 at 4:00 PM","Dec 9 at 5:00 AM","Dec 9 at 5:00 PM","Dec 9 at 6:00 AM","Dec 9 at 6:00 PM","Dec 9 at 7:00 AM","Dec 9 at 7:00 PM","Dec 9 at 8:00 AM","Dec 9 at 8:00 PM","Dec 9 at 9:00 AM","Dec 9 at 9:00 PM"],
+    "timestamp": ["Dec 10 at 10:00 AM","Dec 17 at 10:00 PM","Dec 10 at 11:00 AM","Dec 10 at 11:00 PM","Dec 10 at 12:00 AM","Dec 10 at 12:00 PM","Dec 10 at 1:00 AM","Dec 10 at 1:00 PM","Dec 10 at 2:00 AM","Dec 10 at 2:00 PM","Dec 10 at 3:00 AM","Dec 10 at 3:00 PM","Dec 10 at 4:00 AM","Dec 10 at 4:00 PM","Dec 10 at 5:00 AM","Dec 10 at 5:00 PM","Dec 10 at 6:00 AM","Dec 10 at 6:00 PM","Dec 10 at 7:00 AM","Dec 10 at 7:00 PM","Dec 10 at 8:00 AM","Dec 10 at 8:00 PM","Dec 10 at 9:00 AM","Dec 10 at 9:00 PM","Dec 11 at 10:00 AM","Dec 11 at 10:00 PM","Dec 11 at 11:00 AM","Dec 11 at 11:00 PM","Dec 11 at 12:00 AM","Dec 11 at 12:00 PM","Dec 11 at 1:00 AM","Dec 11 at 1:00 PM","Dec 11 at 2:00 AM","Dec 11 at 2:00 PM","Dec 11 at 3:00 AM","Dec 11 at 3:00 PM","Dec 11 at 4:00 AM","Dec 11 at 4:00 PM","Dec 11 at 5:00 AM","Dec 11 at 5:00 PM","Dec 11 at 6:00 AM","Dec 11 at 6:00 PM","Dec 11 at 7:00 AM","Dec 11 at 7:00 PM","Dec 11 at 8:00 AM","Dec 11 at 8:00 PM","Dec 11 at 9:00 AM","Dec 11 at 9:00 PM","Dec 12 at 10:00 AM","Dec 12 at 10:00 PM","Dec 12 at 11:00 AM","Dec 12 at 11:00 PM","Dec 12 at 12:00 AM","Dec 12 at 12:00 PM","Dec 12 at 1:00 AM","Dec 12 at 1:00 PM","Dec 12 at 2:00 AM","Dec 12 at 2:00 PM","Dec 12 at 3:00 AM","Dec 12 at 3:00 PM","Dec 12 at 4:00 AM","Dec 12 at 4:00 PM","Dec 12 at 5:00 AM","Dec 12 at 5:00 PM","Dec 12 at 6:00 AM","Dec 12 at 6:00 PM","Dec 12 at 7:00 AM","Dec 12 at 7:00 PM","Dec 12 at 8:00 AM","Dec 12 at 8:00 PM","Dec 12 at 9:00 AM","Dec 12 at 9:00 PM","Dec 13 at 10:00 AM","Dec 13 at 10:00 PM","Dec 13 at 11:00 AM","Dec 13 at 11:00 PM","Dec 13 at 12:00 AM","Dec 13 at 12:00 PM","Dec 13 at 1:00 AM","Dec 13 at 1:00 PM","Dec 13 at 2:00 AM","Dec 13 at 2:00 PM","Dec 13 at 3:00 AM","Dec 13 at 3:00 PM","Dec 13 at 4:00 AM","Dec 13 at 4:00 PM","Dec 13 at 5:00 AM","Dec 13 at 5:00 PM","Dec 13 at 6:00 AM","Dec 13 at 6:00 PM","Dec 13 at 7:00 AM","Dec 13 at 7:00 PM","Dec 13 at 8:00 AM","Dec 13 at 8:00 PM","Dec 13 at 9:00 AM","Dec 13 at 9:00 PM","Dec 14 at 10:00 AM","Dec 14 at 10:00 PM","Dec 14 at 11:00 AM","Dec 14 at 11:00 PM","Dec 14 at 12:00 AM","Dec 14 at 12:00 PM","Dec 14 at 1:00 AM","Dec 14 at 1:00 PM","Dec 14 at 2:00 AM","Dec 14 at 2:00 PM","Dec 14 at 3:00 AM","Dec 14 at 3:00 PM","Dec 14 at 4:00 AM","Dec 14 at 4:00 PM","Dec 14 at 5:00 AM","Dec 14 at 5:00 PM","Dec 14 at 6:00 AM","Dec 14 at 6:00 PM","Dec 14 at 7:00 AM","Dec 14 at 7:00 PM","Dec 14 at 8:00 AM","Dec 14 at 8:00 PM","Dec 14 at 9:00 AM","Dec 14 at 9:00 PM","Dec 15 at 10:00 AM","Dec 15 at 11:00 AM","Dec 15 at 12:00 AM","Dec 15 at 12:00 PM","Dec 15 at 1:00 AM","Dec 15 at 1:00 PM","Dec 15 at 2:00 AM","Dec 15 at 3:00 AM","Dec 15 at 4:00 AM","Dec 15 at 5:00 AM","Dec 15 at 6:00 AM","Dec 15 at 7:00 AM","Dec 15 at 8:00 AM","Dec 15 at 9:00 AM","Dec 8 at 10:00 PM","Dec 8 at 11:00 PM","Dec 8 at 2:00 PM","Dec 8 at 3:00 PM","Dec 8 at 4:00 PM","Dec 8 at 5:00 PM","Dec 8 at 6:00 PM","Dec 8 at 7:00 PM","Dec 8 at 8:00 PM","Dec 8 at 9:00 PM","Dec 9 at 10:00 AM","Dec 9 at 10:00 PM","Dec 9 at 11:00 AM","Dec 9 at 11:00 PM","Dec 9 at 12:00 AM","Dec 9 at 12:00 PM","Dec 9 at 1:00 AM","Dec 9 at 1:00 PM","Dec 9 at 2:00 AM","Dec 9 at 2:00 PM","Dec 9 at 3:00 AM","Dec 9 at 3:00 PM","Dec 9 at 4:00 AM","Dec 9 at 4:00 PM","Dec 9 at 5:00 AM","Dec 9 at 5:00 PM","Dec 9 at 6:00 AM","Dec 9 at 6:00 PM","Dec 9 at 7:00 AM","Dec 9 at 7:00 PM","Dec 9 at 8:00 AM","Dec 9 at 8:00 PM","Dec 9 at 9:00 AM","Dec 9 at 9:00 PM"],
     "value1": ["61","68","51","49","55","56","57","64","62","44","66","48","73","66","48","63","42","59","44","55","51","57","42","56","50","60","55","52","56","51","55","45","56","62","80","54","74","59","56","69","55","70","56","67","60","77","53","78","58","76","63","60","67","64","76","58","75","59","94","53","93","70","48","85","50","65","48","73","57","71","65","75","62","62","90","61","93","58","82","57","99","63","70","60","86","87","52","77","56","86","60","78","64","81","65","84","65","71","76","72","73","58","79","63","74","54","88","60","79","79","51","68","53","65","57","68","69","74","70","77","67","65","73","58","61","55","74","53","79","56","90","54","78","77","57","73","57","77","57","74","71","81","70","72","67","72","75","66","72","55","82","58","100","56","53","84","54","84","69","72","75","67","80","71","68","74","65","65"],
     "sell bitcoin": ["22","26","31","32","27","31","37","22","39","27","36","30","50","36","35","41","20","35","28","39","28","49","37","49","27","63","23","56","47","25","37","33","36","32","53","32","40","42","52","33","33","36","28","39","26","50","31","56","31","63","33","59","60","26","54","26","42","26","45","22","38","26","43","43","35","38","43","38","20","42","29","44","48","95","65","77","60","55","76","55","66","56","93","60","59","63","88","71","75","68","60","64","51","85","47","70","34","100","34","70","40","66","37","63","41","78","52","62","46","44","71","31","100","35","89","36","86","36","96","34","25","42","26","49","37","22","54","30","45","26","39","37","46","35","31","32","45","32","32","37","25","32","27","31","19","35","20","33","29","41","59","25","49","34","32","35","47","31","35","26","30","34","35","36","24","27","23","44"],
     "crypto sell": ["56","64","37","33","37","37","45","60","55","41","57","38","70","70","25","47","32","54","50","44","48","48","46","35","43","50","41","36","51","53","40","44","48","62","88","49","82","60","51","77","56","61","43","63","53","58","36","83","52","82","57","69","54","61","56","49","62","42","76","40","100","72","43","79","25","52","49","65","52","50","50","52","60","22","87","52","83","55","76","35","89","42","62","51","69","100","52","58","48","85","51","79","58","72","74","67","66","49","64","42","67","56","59","59","63","45","86","49","70","65","42","58","37","57","51","58","44","57","69","60","58","42","35","65","64","39","66","46","65","52","99","53","94","64","59","72","42","69","57","69","59","74","59","51","65","43","59","51","59","55","83","48","80","44","47","92","48","81","57","71","78","49","62","57","45","63","50","62"],
@@ -344,12 +361,12 @@ def tradeBTC():
             # Process based on the action (Update or Delete)
             if action == 'long':
                 aa = amount/price 
-                print(price)
                 if acc.open_trade("long", aa, price):
                     return redirect(url_for('index')) 
             elif action == 'short':
-
-                return f"Deleted amount: {processed_amount}"
+                aa = amount/price 
+                if acc.open_trade("short", aa, price):
+                    return redirect(url_for('index')) 
             else:
                 return "Invalid action!"
             return redirect(url_for('index')) 
@@ -381,7 +398,7 @@ def gettrades(trades):
 
     for trade in trades:
         if trade.active:
-            table_content += f"<tr><td>{trade.trade_id}</td><td>{trade.trade_type}</td><td>{trade.quantity}</td><td id='bp_{trade.trade_id}'>{trade.price}</td>"
+            table_content += f"<tr><td>{trade.trade_id}</td><td id='tradetype_{trade.trade_id}'>{trade.trade_type}</td><td>{trade.quantity}</td><td id='bp_{trade.trade_id}'>{trade.price}</td>"
             table_content += f"<td><span class='percentage_change' data-tradeid='{trade.trade_id}'>0.00%</span></td>"
             table_content += f"<td><span class='usd_profit' data-tradeid='{trade.trade_id}'>$0.00</span></td>"
             table_content += f"<td><form method='post' action='/close'>"  
@@ -393,37 +410,42 @@ def gettrades(trades):
 
     # JavaScript function for live updates
     live_updates_script = """
-    <script>
-    document.addEventListener('input', function(event) {
-        if (event.target && event.target.id === 'livePrice') {
-            console.log('Live Price Changed:', event.target.value);
-            const livePrice = parseFloat(event.target.value);
-            const rows = document.querySelectorAll('#newsTable tbody tr');
-            
-            rows.forEach(row => {
-                const tradeId = row.querySelector('td:first-child').textContent;
-                const tradePrice = parseFloat(row.querySelector(`#bp_${tradeId}`).textContent);
-                const quantity = parseInt(row.querySelector(`#quantity_${tradeId}`).textContent); // Assuming quantity is retrieved from an element
+<script>
+    // Assuming you're updating livePrice periodically
+    setInterval(updateTable, 5000); // Update every 5 seconds (for example)
+function updateTable() {
+    // Get the live price
+    const livePrice = parseFloat(document.getElementById('livePrice').textContent.split(': ')[1]);
 
-                const percentageChangeSpan = row.querySelector(`.percentage_change[data-tradeid='${tradeId}']`);
-                const usdProfitSpan = row.querySelector(`.usd_profit[data-tradeid='${tradeId}']`);
-                
-                console.log('Processing Trade ID:', tradeId);
-                
-                // Calculate percentage change and USD profit for each row
-                const percentageChange = ((livePrice - tradePrice) / tradePrice) * 100;
-                const usdProfit = (livePrice - tradePrice) * quantity;
-                
-                console.log('Percentage Change:', percentageChange);
-                console.log('USD Profit:', usdProfit);
-                
-                // Update span elements with calculated values
-                percentageChangeSpan.textContent = `${percentageChange.toFixed(2)}%`;
-                usdProfitSpan.textContent = `$${usdProfit.toFixed(2)}`;
-            });
+    // Get all elements with class 'percentage_change' and 'usd_profit'
+    const percentageChangeElements = document.getElementsByClassName('percentage_change');
+    const usdProfitElements = document.getElementsByClassName('usd_profit');
+
+    // Loop through each trade element
+    for (let i = 0; i < percentageChangeElements.length; i++) {
+        const tradeId = percentageChangeElements[i].getAttribute('data-tradeid');
+        const tradeType = document.getElementById(`tradetype_${tradeId}`).textContent; // Get trade type
+        
+        // Update Percentage Change and USD Dollars Profit based on trade type
+        const priceElement = document.getElementById(`bp_${tradeId}`);
+        const currentPrice = parseFloat(priceElement.textContent);
+        const quantity = parseFloat(priceElement.nextElementSibling.textContent);
+        let percentageChange, usdProfit;
+
+        if (tradeType === 'long') {
+            percentageChange = ((livePrice - currentPrice) / currentPrice) * 100;
+            usdProfit = (livePrice - currentPrice) * quantity;
+        } else if (tradeType === 'short') {
+            percentageChange = ((currentPrice - livePrice) / currentPrice) * 100;
+            usdProfit = (currentPrice - livePrice) * quantity;
         }
-    });
-    </script>
+
+        percentageChangeElements[i].textContent = percentageChange.toFixed(2) + '%';
+        usdProfitElements[i].textContent = '$' + usdProfit.toFixed(2);
+    }
+}
+
+</script>
     """
 
     return table_content + live_updates_script
