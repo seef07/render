@@ -1,4 +1,4 @@
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import pandas as pd
 
 analyzer = SentimentIntensityAnalyzer()
