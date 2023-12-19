@@ -27,7 +27,7 @@ websocket_urls = ["wss://fstream.binance.com/ws/" + config["pair"].lower() + "@a
 acc = TradesManager()
 
 app = Flask(__name__)
-app.config['SERVER_NAME'] = '127.0.0.1:5000'  # Replace with your actual server name
+app.config['SERVER_NAME'] = 'testdash-pr7f.onrender.com'  # Replace with your actual server name
 app.config['APPLICATION_ROOT'] = '/'
 app.config['SECRET_KEY'] = 'donsky!'
 socketio = SocketIO(app, cors_allowed_origins='*')
