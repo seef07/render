@@ -37,9 +37,9 @@ def fetchnews():
     # Add classes to score cells in the HTML table
     for index, row in df.iterrows():
         score_class = 'neutral'
-        if row['score'] > 0.5:
+        if row['score'] > 0:
             score_class = 'positive'
-        elif row['score'] < 0.5:
+        elif row['score'] < 0:
             score_class = 'negative'
 
         table_html = table_html.replace(f'<td>{row["score"]}</td>', f'<td class="color-{score_class}">{row["score"]}</td>')

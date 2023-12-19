@@ -30,7 +30,7 @@
 
         #chart1 {
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px white;
             width: 100% !important;
         }
 
@@ -69,7 +69,7 @@
 #trading2,
 #trading3 {
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 8px white;
     padding: 20px;
     width: 46%;
     margin-bottom: 10px; /* Adjust the margin-bottom as needed */
@@ -123,7 +123,7 @@ button {
         }
         #navbar {
             background-color: #121212;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px white;
             padding: 10px;
             display: flex;
             justify-content: space-between;
@@ -145,7 +145,7 @@ button {
         }
 
         #navbar ul li:hover {
-            text-decoration: underline;
+
         }
 
         .overlay {
@@ -176,24 +176,31 @@ button {
     }
     #website-name {
     font-weight: bold;
-    border-bottom: 2px solid white;
     margin-right: 20px; /* Adjust spacing */
+    color: #1DB954;
 }
-
+#longtext{
+    font-size: 10px;
+    width: 400px;
+}
+#sourcename{
+    font-weight: bold;
+    color:aqua !important;
+}
     </style>
 </head>
 
 <body>
     <div id="navbar">
-        <h1 id="website-name">Dashboard</h1>    
+        <h1 id="website-name">SentimentDashb</h1>    
         <ul>
-            <li>Name</li>
-            <li>Long text that exceeds 250 characters</li>
+            <li id = "sourcename">Name</li>
+            <li id = "longtext">Long text that exceeds 250 characters</li>
         </ul>
         <ul>
-            <li>Home</li>
             <li>Balance: </li>
-            <li>{{ balance | safe }}</li>
+            <li>${{ balance | safe }}</li>
+            <li>            </li>
         </ul>
     </div>
     <div id="loadingOverlay" class="overlay">
@@ -306,6 +313,13 @@ function showLoader() {
         socket.on('update', function (data) {
             var livePriceElement = document.getElementById('livePrice');
             livePriceElement.textContent = 'Live Price: ' + data.p;
+            if (data.source){
+                var sourcename = document.getElementById('sourcename');
+                var longtext = document.getElementById('longtext');
+                sourcename.textContent = data.source +  " :";
+                longtext.textContent = data.body + data.description;
+
+            }
             console.log('Received updateSensorData:', data);
      
             var timestamp = new Date().toLocaleTimeString();
