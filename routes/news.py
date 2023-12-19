@@ -4,7 +4,7 @@ from services.sentiment_analysis import analyze_sentiment
 from datetime import datetime, timedelta
 import requests
 import pandas as pd
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 analyzer = SentimentIntensityAnalyzer()
 
